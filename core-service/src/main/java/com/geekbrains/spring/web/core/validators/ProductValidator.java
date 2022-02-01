@@ -1,9 +1,6 @@
 package com.geekbrains.spring.web.core.validators;
 
 import com.geekbrains.spring.web.core.dto.ProductDto;
-import org.springframework.stereotype.Component;
-
-import com.geekbrains.spring.web.core.dto.ProductDto;
 import com.geekbrains.spring.web.core.exceptions.ValidationException;
 import org.springframework.stereotype.Component;
 
@@ -14,13 +11,16 @@ import java.util.List;
 public class ProductValidator {
     public void validate(ProductDto productDto) {
         List<String> errors = new ArrayList<>();
-        if (productDto.getPrice() < 1) {
-            errors.add("Цена продукта не может быть меньше 1");
+        if(productDto.getPrice() < 1) {
+            errors.add("product's price cannot be less than 1");
         }
-        if (productDto.getTitle().isBlank()) {
-            errors.add("Продукт не может иметь пустое название");
+        if(productDto.getTitle().isBlank()) {
+            errors.add("product's title cannot be empty or contain space");
         }
-        if (!errors.isEmpty()) {
+        if(productDto.getCategoryTitle().isBlank()) {
+            errors.add("category's title cannot be empty or contain space");
+        }
+        if(!errors.isEmpty()){
             throw new ValidationException(errors);
         }
     }

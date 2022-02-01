@@ -1,24 +1,51 @@
-create table products
-(
-    id         bigserial primary key,
-    title      varchar(255),
-    price      int,
-    created_at timestamp default current_timestamp,
-    updated_at timestamp default current_timestamp
+create table categories (
+    id              bigserial primary key,
+    title           varchar(255),
+    created_at      timestamp default current_timestamp,
+    updated_at      timestamp default current_timestamp
 );
 
-insert into products (title, price)
-values ('Milk', 100),
-       ('Bread', 80),
-       ('Cheese', 90),
-       ('Cheese2', 90),
-       ('Cheese3', 90),
-       ('Cheese4', 90),
-       ('Cheese5', 90),
-       ('Cheese6', 90),
-       ('Cheese7', 90),
-       ('Cheese8', 90),
-       ('Cheese9', 90);
+insert into categories (title)
+values
+('Vegetables'),
+('Drink'),
+('Milk'),
+('Fruit'),
+('Sweet'),
+('Grocery'),
+('Fish');
+
+create table products (
+  id            bigserial primary key,
+  title         varchar(255),
+  price         int,
+  category_id   bigint references categories (id),
+  created_at    timestamp default current_timestamp,
+  updated_at    timestamp default current_timestamp
+);
+
+insert into products (title, price, category_id)
+values
+('Bread', 100, 6),
+('Apple', 100, 4),
+('Milk', 70, 3),
+('Eggs', 100, 6),
+('Fish', 600, 7),
+('Coffee', 500, 2),
+('Tea', 300, 2),
+('Butter', 200, 3),
+('Butter Maxi', 450, 3),
+('Banana', 70, 4),
+('Orange juice', 100, 2),
+('Cheese', 1200, 3),
+('Tomato', 200, 1),
+('Cucumber', 150, 1),
+('Potato', 50, 1),
+('Pasta', 100, 6),
+('Dumplings', 700, 6),
+('Corn', 70, 6),
+('Cookie', 100, 5),
+('Salmon', 1200, 7);
 
 create table orders
 (
