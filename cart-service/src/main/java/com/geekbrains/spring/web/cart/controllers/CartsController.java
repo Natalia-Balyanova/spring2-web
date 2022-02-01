@@ -45,7 +45,7 @@ public class CartsController {
     }
 
     @GetMapping("/{uuid}/merge")
-    public void merge(@RequestHeader(required = false) String username, @PathVariable String uuid) {
+    public void merge(@RequestHeader String username, @PathVariable String uuid) {
         cartService.merge(
                 getCurrentCartUuid(username, null),
                 getCurrentCartUuid(null, uuid)

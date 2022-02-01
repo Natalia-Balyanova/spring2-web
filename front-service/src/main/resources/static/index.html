@@ -25,13 +25,13 @@
                     <a class="nav-link" href="#!/">Spring Web Application</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#!/store">Каталог товаров</a>
+                    <a class="nav-link" href="#!/store">Catalog</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#!/cart">Корзина</a>
+                    <a class="nav-link" href="#!/cart">Cart</a>
                 </li>
                 <li class="nav-item" ng-show="isUserLoggedIn()">
-                    <a class="nav-link" href="#!/orders">Мои заказы</a>
+                    <a class="nav-link" href="#!/orders">My orders</a>
                 </li>
 
                 <li class="nav-item" ng-show="!isUserLoggedIn()">
@@ -44,13 +44,13 @@
                                    aria-describedby="inputGroup-sizing-sm" style="margin-left: 10px;">
 
                             <button id="navLoginSubmit" class="btn btn-outline-warning btn-sm"
-                                    style="margin-left: 10px;" type="submit">Войти
+                                    style="margin-left: 10px;" type="submit">Sign in
                             </button>
                         </div>
                     </form>
                 </li>
                 <li class="nav-item" ng-show="isUserLoggedIn()" style="padding: 4px;">
-                    <button class="btn btn-outline-secondary btn-sm" ng-click="tryToLogout()">Выйти</button>
+                    <button class="btn btn-outline-secondary btn-sm" ng-click="tryToLogout()">Log out</button>
                 </li>
             </ul>
         </div>

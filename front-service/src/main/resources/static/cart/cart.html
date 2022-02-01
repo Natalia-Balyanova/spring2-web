@@ -1,38 +1,50 @@
 <div>
     <p></p>
-    <h3>Корзина</h3>
+    <h3>Products in Cart</h3>
     <table class="table table-hover">
-        <tr>
-            <td>Название товара</td>
-            <td>Количество</td>
-            <td>Цена</td>
-        </tr>
+        <span ng-show="cart.items.length==0"> Cart is clear </span>
+        <table class="table" ng-show="cart.items.length > 0">
+            <thead>
+                <tr>
+                    <td>Title</td>
+                    <td>Quantity</td>
+                    <td>Price</td>
+                    <td>Delete from Cart</td>
+                </tr>
+            </thead>
         <tbody>
         <tr ng-repeat="item in cart.items">
             <td>{{item.productTitle}}</td>
-            <td>{{item.quantity}}</td>
+            <td>
+                <button class="btn btn-primary" ng-click="decrementItem(item.productId)">-</button>
+                {{item.quantity}}
+                <button class="btn btn-primary" ng-click="incrementItem(item.productId)">+</button>
+            </td>
             <td>{{item.pricePerProduct + ' x ' + item.quantity + ' = ' + item.price}}</td>
+            <td>
+                <button class="btn btn-danger"  ng-click="removeItem(item.productId)">Delete</button>
+            </td>
         </tr>
         <tr>
             <td></td>
-            <td>Итого</td>
+            <td>Total</td>
             <td>{{cart.totalPrice}}</td>
         </tr>
         </tbody>
     </table>
     <p>
-        <button class="btn btn-secondary" ng-click="clearCart()">Очистить корзину</button>
+        <button class="btn btn-secondary"  ng-show="isUserLoggedIn() && cart.items.length > 0" ng-click="clearCart()">Clear cart</button>
     </p>
 
     <p></p>
-    <h3>Детали заказа</h3>
-    <form novalidate>
-        <input class="form-control" type="text" placeholder="Номер телефона получателя" ng-model="orderDetails.phone">
+    <h3  ng-show="isUserLoggedIn() && cart.items.length > 0">Order details</h3>
+    <form ng-show="isUserLoggedIn() && cart.items.length > 0">
+        <input class="form-control" type="text" placeholder="Phone number" ng-model="orderDetails.phone">
         <p></p>
-        <input class="form-control" type="text" placeholder="Адрес доставки" ng-model="orderDetails.address">
+        <input class="form-control" type="text" placeholder="Address" ng-model="orderDetails.address">
         <p></p>
     </form>
 
-    <button class="btn btn-primary" ng-click="checkOut()" ng-show="isUserLoggedIn() && cart.items.length > 0">Оформить заказ</button>
-    <button class="btn btn-secondary" ng-click="disabledCheckOut()" ng-show="!isUserLoggedIn() && cart.items.length > 0">Оформить заказ</button>
+    <button class="btn btn-primary" ng-click="checkOut()" ng-show="isUserLoggedIn() && cart.items.length > 0">Create order</button>
+    <button class="btn btn-secondary" ng-click="disabledCheckOut()" ng-show="!isUserLoggedIn() && cart.items.length > 0">Create order</button>
 </div>

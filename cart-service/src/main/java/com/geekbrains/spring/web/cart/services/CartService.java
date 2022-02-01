@@ -34,8 +34,7 @@ public class CartService {
         if (Boolean.FALSE.equals(redisTemplate.hasKey(cartKey))) {
             redisTemplate.opsForValue().set(cartKey, new Cart());
         }
-        Object object = redisTemplate.opsForValue().get(cartKey);
-        return (Cart) object;
+        return (Cart) redisTemplate.opsForValue().get(cartKey);
     }
 
     public void addToCart(String cartKey, Long productId) {
