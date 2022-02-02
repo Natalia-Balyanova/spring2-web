@@ -28,7 +28,7 @@ angular.module('market-front').controller('storeController', function ($scope, $
 
     $scope.addToCart = function (productId) {
         $http ({
-            url: 'http://localhost:5555/cart/api/v1/cart/' + $localStorage.webMarketGuestCartId + '/add/' + productId,
+            url: 'http://localhost:5555/core/api/v1/cart/' + $localStorage.webMarketGuestCartId + '/add/' + productId,
             method: 'GET'
         }).then(function (response) {
         });
