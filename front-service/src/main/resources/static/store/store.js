@@ -7,6 +7,7 @@ angular.module('market-front').controller('storeController', function ($scope, $
             method: 'GET',
             params: {
                 p: pageIndex,
+                category_part: $scope.filter ? $scope.filter.category_part : null,
                 title_part: $scope.filter ? $scope.filter.title_part : null,
                 min_price: $scope.filter ? $scope.filter.min_price : null,
                 max_price: $scope.filter ? $scope.filter.max_price : null
@@ -27,11 +28,27 @@ angular.module('market-front').controller('storeController', function ($scope, $
 
     $scope.addToCart = function (productId) {
         $http ({
-            url: 'http://localhost:5555/cart/api/v1/cart/' + $localStorage.webMarketGuestCartId + '/add/' + productId,
+            url: 'http://localhost:5555/core/api/v1/cart/' + $localStorage.webMarketGuestCartId + '/add/' + productId,
             method: 'GET'
         }).then(function (response) {
         });
     }
+
+     $scope.deleteProduct = function (productId) {
+            $http.delete(contextPath + 'api/v1/products/' + productId)
+                .then(function (response) {
+                     console.log(response.data)
+                     $scope.loadProducts();
+                });
+     }
+
+      $scope.loadProductsDefault = function (pageIndex = 1) {
+             $http.get(contextPath + 'api/v1/products')
+                 .then(function (response) {
+                     $scope.ProductsPage = response.data;
+                     $scope.paginationArray = $scope.generatePagesIndexes(1, $scope.ProductsPage.totalPages);
+                 });
+      }
 
     $scope.loadProducts();
 });

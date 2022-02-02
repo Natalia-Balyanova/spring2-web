@@ -1,7 +1,7 @@
-package com.geekbrains.spring.web.cart.services;
+package com.geekbrains.spring.web.core.services;
 
 import com.geekbrains.spring.web.api.exceptions.ResourceNotFoundException;
-import com.geekbrains.spring.web.cart.dto.Cart;
+import com.geekbrains.spring.web.core.dto.Cart;
 import com.geekbrains.spring.web.core.entities.Product;
 
 import com.geekbrains.spring.web.core.services.ProductsService;
@@ -34,8 +34,7 @@ public class CartService {
         if (Boolean.FALSE.equals(redisTemplate.hasKey(cartKey))) {
             redisTemplate.opsForValue().set(cartKey, new Cart());
         }
-        Object object = redisTemplate.opsForValue().get(cartKey);
-        return (Cart) object;
+        return (Cart) redisTemplate.opsForValue().get(cartKey);
     }
 
     public void addToCart(String cartKey, Long productId) {

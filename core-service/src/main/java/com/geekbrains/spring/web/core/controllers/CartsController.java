@@ -1,8 +1,8 @@
-package com.geekbrains.spring.web.cart.controllers;
+package com.geekbrains.spring.web.core.controllers;
 
 import com.geekbrains.spring.web.api.dto.StringResponse;
-import com.geekbrains.spring.web.cart.dto.Cart;
-import com.geekbrains.spring.web.cart.services.CartService;
+import com.geekbrains.spring.web.core.dto.Cart;
+import com.geekbrains.spring.web.core.services.CartService;
 import com.geekbrains.spring.web.core.services.ProductsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -45,7 +45,7 @@ public class CartsController {
     }
 
     @GetMapping("/{uuid}/merge")
-    public void merge(@RequestHeader(required = false) String username, @PathVariable String uuid) {
+    public void merge(@RequestHeader String username, @PathVariable String uuid) {
         cartService.merge(
                 getCurrentCartUuid(username, null),
                 getCurrentCartUuid(null, uuid)

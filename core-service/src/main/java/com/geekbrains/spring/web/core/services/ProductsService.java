@@ -19,7 +19,7 @@ import java.util.Optional;
 public class ProductsService {
     private final ProductsRepository productsRepository;
 
-    public Page<Product> findAll(Integer minPrice, Integer maxPrice, String partTitle, Integer page) {
+    public Page<Product> findAll(Integer minPrice, Integer maxPrice, String partTitle, Integer page, String categoryPart) {
         Specification<Product> spec = Specification.where(null);
         if (minPrice != null) {
             spec = spec.and(ProductsSpecifications.priceGreaterOrEqualsThan(minPrice));
@@ -30,7 +30,9 @@ public class ProductsService {
         if (partTitle != null) {
             spec = spec.and(ProductsSpecifications.titleLike(partTitle));
         }
-
+        if (categoryPart != null){
+            spec = spec.and(ProductsSpecifications.categoryEqual(categoryPart));
+        }
         return productsRepository.findAll(spec, PageRequest.of(page - 1, 8));
     }
 
