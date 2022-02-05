@@ -30,15 +30,23 @@ public class CartService {
         return UUID.randomUUID().toString();
     }
 
+//    public Cart getCurrentCart(String cartId) {
+//        if (!redisTemplate.hasKey(cartPrefix + cartId)) {
+//            redisTemplate.opsForValue().set(cartPrefix + cartId, new Cart());
+//        }
+//        Cart cart = (Cart)redisTemplate.opsForValue().get(cartPrefix + cartId);
+//        return cart;
+//    }
+
     public Cart getCurrentCart(String cartKey) {
         if (Boolean.FALSE.equals(redisTemplate.hasKey(cartKey))) {
             redisTemplate.opsForValue().set(cartKey, new Cart());
         }
-        return (Cart) redisTemplate.opsForValue().get(cartKey);
+        return (Cart)redisTemplate.opsForValue().get(cartKey);
     }
 
     public void addToCart(String cartKey, Long productId) {
-        Product product = productsService.findById(productId).orElseThrow(() -> new ResourceNotFoundException("Невозможно добавить продукт в корзину. Продукт не найдет, id: " + productId));
+        Product product = productsService.findById(productId).orElseThrow(() -> new ResourceNotFoundException("Невозможно добавить продукт в корзину. Продукт не найден, id: " + productId));
         execute(cartKey, c -> {
             c.add(product);
         });
@@ -47,6 +55,16 @@ public class CartService {
     public void clearCart(String cartKey) {
         execute(cartKey, Cart::clear);
     }
+
+//    public void save(String cartId, Cart cart) {
+//        redisTemplate.opsForValue().set(cartPrefix + cartId, cart);
+//    }
+//
+//    public void clearCart(String cartId) {
+//        Cart cart = getCurrentCart(cartId);
+//        cart.clear();
+//        save(cartId, cart);
+//    }
 
     public void removeItemFromCart(String cartKey, Long productId) {
         execute(cartKey, c -> c.remove(productId));
