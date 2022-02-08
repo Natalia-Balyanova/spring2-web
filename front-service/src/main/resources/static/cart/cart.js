@@ -1,5 +1,5 @@
 angular.module('market-front').controller('cartController', function ($scope, $http, $location, $localStorage) {
-    const contextPath = 'http://localhost:5555/core/';
+    const contextPath = 'http://localhost:5555/cart/';
 
     $scope.loadCart = function () {
         $http({
@@ -8,56 +8,56 @@ angular.module('market-front').controller('cartController', function ($scope, $h
         }).then(function (response) {
             $scope.cart = response.data;
             });
-        }
+        };
 
-               $scope.disabledCheckOut = function () {
-                   alert("You must be logged in to place an order");
-               }
+    $scope.disabledCheckOut = function () {
+        alert("You must be logged in to place an order");
+    }
 
-                $scope.removeItem = function (productId) {
-                       $http ({
-                           url: contextPath + 'api/v1/cart/' + $localStorage.springWebGuestCartId + '/remove/' + productId,
-                           method: 'GET'
-                       }).then(function (response) {
-                           $scope.loadCart();
-                       });
-                }
+    $scope.removeItem = function (productId) {
+        $http ({
+            url: contextPath + 'api/v1/cart/' + $localStorage.springWebGuestCartId + '/remove/' + productId,
+            method: 'GET'
+        }).then(function (response) {
+            $scope.loadCart();
+        });
+    }
 
-                   $scope.incrementItem = function (productId) {
-                       $http ({
-                           url: contextPath + 'api/v1/cart/' +  $localStorage.springWebGuestCartId + '/add/' + productId,
-                           method: 'GET'
-                       }).then(function (response) {
-                               $scope.loadCart();
-                       });
-                }
+    $scope.incrementItem = function (productId) {
+        $http ({
+            url: contextPath + 'api/v1/cart/' +  $localStorage.springWebGuestCartId + '/add/' + productId,
+            method: 'GET'
+        }).then(function (response) {
+            $scope.loadCart();
+        });
+    }
 
-                $scope.decrementItem = function (productId) {
-                        $http ({
-                            url: contextPath + 'api/v1/cart/' + $localStorage.springWebGuestCartId  + '/decrement/' + productId,
-                            method: 'GET'
-                        }).then(function (response) {
-                            $scope.loadCart();
-                        });
-                }
+    $scope.decrementItem = function (productId) {
+        $http ({
+            url: contextPath + 'api/v1/cart/' + $localStorage.springWebGuestCartId  + '/decrement/' + productId,
+            method: 'GET'
+        }).then(function (response) {
+            $scope.loadCart();
+        });
+    }
 
-               $scope.clearCart = function () {
-                   $http.get(contextPath + 'api/v1/cart/' + $localStorage.springWebGuestCartId + '/clear')
-                       .then(function (response) {
-                           $scope.loadCart();
-                       });
-               }
+    $scope.clearCart = function () {
+        $http.get(contextPath + 'api/v1/cart/' + $localStorage.springWebGuestCartId + '/clear')
+        .then(function (response) {
+            $scope.loadCart();
+        });
+    }
 
-               $scope.checkOut = function () {
-                   $http({
-                       url: contextPath + 'api/v1/orders',
-                       method: 'POST',
-                       data: $scope.orderDetails
-                   }).then(function (response) {
-                       $scope.loadCart();
-                       $scope.orderDetails = null
-                   });
-               };
+    $scope.checkOut = function () {
+        $http({
+            url: 'http://localhost:5555/core/api/v1/orders',
+            method: 'POST',
+            data: $scope.orderDetails
+        }).then(function (response) {
+            $scope.loadCart();
+            $scope.orderDetails = null
+        });
+    };
 
-               $scope.loadCart();
-           });
+    $scope.loadCart();
+});

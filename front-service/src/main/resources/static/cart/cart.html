@@ -33,12 +33,12 @@
         </tbody>
     </table>
     <p>
-        <button class="btn btn-secondary"  ng-show="isUserLoggedIn() && cart.items.length > 0" ng-click="clearCart()">Clear cart</button>
+        <button class="btn btn-secondary" ng-show="isUserLoggedIn() && cart.items.length > 0" ng-click="clearCart()">Clear cart</button>
     </p>
 
     <p></p>
-    <h3  ng-show="isUserLoggedIn() && cart.items.length > 0">Order details</h3>
-    <form ng-show="isUserLoggedIn() && cart.items.length > 0">
+    <h3 ng-show="isUserLoggedIn() && cart.items.length > 0" >Order details</h3>
+    <form ng-show="isUserLoggedIn() && cart.items.length > 0" >
         <input class="form-control" type="text" placeholder="Phone number" ng-model="orderDetails.phone">
         <p></p>
         <input class="form-control" type="text" placeholder="Address" ng-model="orderDetails.address">
@@ -47,4 +47,5 @@
 
     <button class="btn btn-primary" ng-click="checkOut()" ng-show="isUserLoggedIn() && cart.items.length > 0">Create order</button>
     <button class="btn btn-secondary" ng-click="disabledCheckOut()" ng-show="!isUserLoggedIn() && cart.items.length > 0">Create order</button>
+    </table>
 </div>
