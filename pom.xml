@@ -9,8 +9,8 @@
 		<module>auth-service</module>
 		<module>gateway</module>
 		<module>front-service</module>
-        <module>cart-service</module>
-    </modules>
+		<module>carts-service</module>
+	</modules>
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
@@ -49,15 +49,7 @@
 			<scope>test</scope>
 		</dependency>
 
-		<dependency>
-			<groupId>org.springframework.data</groupId>
-			<artifactId>spring-data-redis</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>redis.clients</groupId>
-			<artifactId>jedis</artifactId>
-			<version>3.6.0</version>
-		</dependency>
+
 	</dependencies>
 
 	<build>
