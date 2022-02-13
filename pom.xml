@@ -10,6 +10,7 @@
 		<module>gateway</module>
 		<module>front-service</module>
 		<module>carts-service</module>
+		<module>recommendation</module>
 	</modules>
 	<parent>
 		<groupId>org.springframework.boot</groupId>

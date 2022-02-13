@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.UUID;
 import java.util.function.Consumer;
 
@@ -18,6 +19,7 @@ import java.util.function.Consumer;
 public class CartService {
     private final ProductsServiceIntegration productsServiceIntegration;
     private final RedisTemplate<String, Object> redisTemplate;
+    private final RedisTemplate<String, Integer> redisTemplateForCounter;
 
     @Value("${utils.cart.prefix}")
     private String cartPrefix;
@@ -42,6 +44,7 @@ public class CartService {
         execute(cartKey, c -> {
             c.add(productDto);
         });
+        updateProductsCounter(productDto);
     }
 
     public void clearCart(String cartKey) {
@@ -72,5 +75,24 @@ public class CartService {
 
     public void updateCart(String cartKey, Cart cart) {
         redisTemplate.opsForValue().set(cartKey, cart);
+    }
+
+    public Integer getProductsCounter(String productKey) {
+        Integer counter = 0;
+        if (Boolean.TRUE.equals(redisTemplateForCounter.hasKey(productKey))) {
+            counter = redisTemplateForCounter.opsForValue().get(productKey);
+        }
+        return counter;
+    }
+
+    private void updateProductsCounter(ProductDto productDto) {
+        String productKey = (LocalDate.now()) + "_" + productDto.getId();
+        if (Boolean.FALSE.equals(redisTemplateForCounter.hasKey(productKey))) {
+            Integer counter = 1;
+            redisTemplateForCounter.opsForValue().set(productKey, counter);
+        } else {
+            Integer counter = redisTemplateForCounter.opsForValue().get(productKey);
+            redisTemplateForCounter.opsForValue().set(productKey, counter + 1);
+        }
     }
 }
