@@ -26,11 +26,30 @@ angular.module('market-front').controller('storeController', function ($scope, $
         return arr;
     }
 
+    //проверка неудачи в постмане:
+    //http://localhost:5555/cart/api/v1/cart/{"username":"bob","token":"eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJib2IiLCJyb2xlcyI6WyJST0xFX1VTRVIiXSwiZXhwIjoxNjQ1MzI5NjIxLCJpYXQiOjE2NDUyOTM2MjF9.JdrOWZVC3UIgZsdDOTxzBCUMDIuHDxIdH7xi8i-Iuc0"}/add/0
+    //response: "value": "Product not found, id: 0"
     $scope.addToCart = function (productId) {
         $http.get('http://localhost:5555/cart/api/v1/cart/' + $localStorage.springWebGuestCartId + '/add/' + productId)
             .then(function (response) {
+                $scope.Response = response.data;
+                console.log(response.data);
+                alert($scope.Response.value);
             });
     }
+
+   //здесь не получилось вшить success/errorCallback.
+//      $scope.addToCart = function (productId) {
+//         $http.get('http://localhost:5555/cart/api/v1/cart/' + $localStorage.springWebGuestCartId + '/add/' + productId)
+//            .then(function successCallback(response) {
+//               $scope.Response = response.data;
+//               console.log(response.data);
+//            }, function errorCallback(response) {
+//                $scope.Response = response.data;
+//                console.log(response.data);
+//                alert($scope.Response.value);
+//        });
+//     }
 
      $scope.deleteProduct = function (productId) {
             $http.delete(contextPath + 'api/v1/products/' + productId)

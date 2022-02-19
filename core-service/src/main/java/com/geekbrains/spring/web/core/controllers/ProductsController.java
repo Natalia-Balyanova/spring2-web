@@ -1,6 +1,7 @@
 package com.geekbrains.spring.web.core.controllers;
 
 import com.geekbrains.spring.web.api.exceptions.ResourceNotFoundException;
+import com.geekbrains.spring.web.api.model.MessageResponse;
 import com.geekbrains.spring.web.core.converters.ProductConverter;
 import com.geekbrains.spring.web.api.core.ProductDto;
 import com.geekbrains.spring.web.core.entities.Product;
@@ -35,6 +36,11 @@ public class ProductsController {
 //        return productsService.findAll(minPrice, maxPrice, titlePart, page).map(
 //                p -> productConverter.entityToDto(p)
 //        );
+    }
+
+    @GetMapping("/exceptions/{id}")
+    public MessageResponse getProductByIdWithException(@PathVariable Long id) {
+        return productsService.findByIdForResponse(id);
     }
 
     @GetMapping("/{id}")
