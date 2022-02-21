@@ -2,7 +2,6 @@ package com.geekbrains.spring.web.core.services;
 
 import com.geekbrains.spring.web.api.exceptions.ResourceNotFoundException;
 import com.geekbrains.spring.web.api.core.ProductDto;
-import com.geekbrains.spring.web.api.model.MessageResponse;
 import com.geekbrains.spring.web.core.converters.ProductConverter;
 import com.geekbrains.spring.web.core.entities.Product;
 import com.geekbrains.spring.web.core.repositories.ProductsRepository;
@@ -23,7 +22,6 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class ProductsService {
     private final ProductsRepository productsRepository;
-    private final ProductConverter productConverter;
 
     public Page<Product> findAll(Integer minPrice, Integer maxPrice, String partTitle, Integer page, String categoryPart) {
         Specification<Product> spec = Specification.where(null);
@@ -62,19 +60,19 @@ public class ProductsService {
         return product;
     }
 
-    public MessageResponse findByIdForResponse(Long id) {
-        try {
-            MessageResponse messageResponse = new MessageResponse(productConverter.entityToDto(productsRepository.findById(id).get()), 200, true, "product added to cart");
-            return messageResponse;
-        } catch (NoSuchElementException e) {
-            MessageResponse messageResponse = new MessageResponse(null, 404, false, "Product not found, id: "  + id);
-            return messageResponse;
-        } catch (HttpClientErrorException.BadRequest e) {
-            MessageResponse messageResponse = new MessageResponse(null, 400, false, "Bad request");
-            return messageResponse;
-        } catch (HttpServerErrorException.InternalServerError e) {
-            MessageResponse messageResponse = new MessageResponse(null, 500, false, "Internal Server Error");
-            return messageResponse;
-        }
-    }
+//    public MessageResponse findByIdForResponse(Long id) {
+//        try {
+//            MessageResponse messageResponse = new MessageResponse(productConverter.entityToDto(productsRepository.findById(id).get()), 200, true, "product added to cart");
+//            return messageResponse;
+//        } catch (NoSuchElementException e) {
+//            MessageResponse messageResponse = new MessageResponse(null, 404, false, "Product not found, id: "  + id);
+//            return messageResponse;
+//        } catch (HttpClientErrorException.BadRequest e) {
+//            MessageResponse messageResponse = new MessageResponse(null, 400, false, "Bad request");
+//            return messageResponse;
+//        } catch (HttpServerErrorException.InternalServerError e) {
+//            MessageResponse messageResponse = new MessageResponse(null, 500, false, "Internal Server Error");
+//            return messageResponse;
+//        }
+//    }
 }

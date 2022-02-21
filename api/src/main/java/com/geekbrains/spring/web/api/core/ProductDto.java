@@ -1,9 +1,11 @@
 package com.geekbrains.spring.web.api.core;
 
+import java.math.BigDecimal;
+
 public class ProductDto {
     private Long id;
     private String title;
-    private Integer price;
+    private BigDecimal price;
     private String categoryTitle;
 
     public Long getId() {
@@ -22,11 +24,11 @@ public class ProductDto {
         this.title = title;
     }
 
-    public Integer getPrice() {
+    public BigDecimal getPrice() {
         return price;
     }
 
-    public void setPrice(Integer price) {
+    public void setPrice(BigDecimal price) {
         this.price = price;
     }
 
@@ -41,7 +43,7 @@ public class ProductDto {
     public ProductDto() {
     }
 
-    public ProductDto(Long id, String title, Integer price, String categoryTitle) {
+    public ProductDto(Long id, String title, BigDecimal price, String categoryTitle) {
         this.id = id;
         this.title = title;
         this.price = price;

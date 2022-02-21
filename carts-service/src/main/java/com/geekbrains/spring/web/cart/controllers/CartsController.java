@@ -27,8 +27,8 @@ public class CartsController {
     }
 
     @GetMapping("/{uuid}/add/{productId}")
-    public StringResponse add(@RequestHeader(required = false) String username, @PathVariable String uuid, @PathVariable Long productId) {
-        return new StringResponse(cartService.addToCart(getCurrentCartUuid(username, uuid), productId));
+    public void add(@RequestHeader(required = false) String username, @PathVariable String uuid, @PathVariable Long productId) {
+        cartService.addToCart(getCurrentCartUuid(username, uuid), productId);
     }
 
     @GetMapping("/{uuid}/decrement/{productId}")
@@ -47,7 +47,7 @@ public class CartsController {
     }
 
     @GetMapping("/{uuid}/merge")
-    public void merge(@RequestHeader String username, @PathVariable String uuid) {
+    public void merge(@RequestHeader(required = false) String username, @PathVariable String uuid) {
         cartService.merge(
                 getCurrentCartUuid(username, null),
                 getCurrentCartUuid(null, uuid)

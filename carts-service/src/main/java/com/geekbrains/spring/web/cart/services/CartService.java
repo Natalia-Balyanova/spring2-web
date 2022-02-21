@@ -2,7 +2,7 @@ package com.geekbrains.spring.web.cart.services;
 
 import com.geekbrains.spring.web.api.core.ProductDto;
 
-import com.geekbrains.spring.web.api.model.MessageResponse;
+import com.geekbrains.spring.web.api.exceptions.ResourceNotFoundException;
 import com.geekbrains.spring.web.cart.integrations.ProductsServiceIntegration;
 import com.geekbrains.spring.web.cart.models.Cart;
 import lombok.RequiredArgsConstructor;
@@ -31,31 +31,31 @@ public class CartService {
     }
 
     public Cart getCurrentCart(String cartKey) {
-        if (Boolean.FALSE.equals(redisTemplate.hasKey(cartKey))) {
+        if (!redisTemplate.hasKey(cartKey)) {
             redisTemplate.opsForValue().set(cartKey, new Cart());
         }
         return (Cart) redisTemplate.opsForValue().get(cartKey);
     }
 
-//    public void addToCart(String cartKey, Long productId) {
-//        ProductDto productDto = productsServiceIntegration.findById(productId).orElseThrow(() -> new ResourceNotFoundException("Невозможно добавить продукт в корзину. Продукт не найдет, id: " + productId));
-//        execute(cartKey, c -> {
-//            c.add(productDto);
-//        });
-//    }
-
-    public String addToCart(String cartKey, Long productId) {
-        MessageResponse messageResponse = productsServiceIntegration.findById(productId);//ищем продукт
-        if (messageResponse.isSuccess()){
-            ProductDto productDto = messageResponse.getProductDto();
-            execute(cartKey, c -> {
-                c.add(productDto);
-            });
-            return "product " + productDto.getTitle() + " added to cart";
-        } else {
-            return messageResponse.getMessage();
-        }
+    public void addToCart(String cartKey, Long productId) {
+        ProductDto productDto = productsServiceIntegration.findById(productId).orElseThrow(() -> new ResourceNotFoundException("Невозможно добавить продукт в корзину. Продукт не найдет, id: " + productId));
+        execute(cartKey, c -> {
+            c.add(productDto);
+        });
     }
+
+//    public String addToCart(String cartKey, Long productId) {
+//        MessageResponse messageResponse = productsServiceIntegration.findById(productId);//ищем продукт
+//        if (messageResponse.isSuccess()){
+//            ProductDto productDto = messageResponse.getProductDto();
+//            execute(cartKey, c -> {
+//                c.add(productDto);
+//            });
+//            return "product " + productDto.getTitle() + " added to cart";
+//        } else {
+//            return messageResponse.getMessage();
+//        }
+//    }
 
     public void clearCart(String cartKey) {
         execute(cartKey, Cart::clear);
