@@ -17,6 +17,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
+//http://localhost:8189/web-market-core/swagger-ui/index.html
 @RestController
 @RequestMapping("/api/v1/products")
 @RequiredArgsConstructor
@@ -35,7 +36,6 @@ public class ProductsController {
                     )
             }
     )
-
     @GetMapping
     public Page<ProductDto> getAllProducts(
             @RequestParam(name = "p", defaultValue = "1") Integer page,
@@ -50,9 +50,6 @@ public class ProductsController {
         return productsService.findAll(minPrice, maxPrice, titlePart, page, categoryPart).map(
                 p -> productConverter.entityToDto(p)
         );
-//        return productsService.findAll(minPrice, maxPrice, titlePart, page).map(
-//                p -> productConverter.entityToDto(p)
-//        );
     }
 
     @GetMapping("/{id}")
@@ -76,12 +73,16 @@ public class ProductsController {
         return productConverter.entityToDto(product);
     }
 
-//    @GetMapping("/exceptions/{id}")
-//    public MessageResponse getProductByIdWithException(@PathVariable Long id) {
-//        return productsService.findByIdForResponse(id);
-//    }
-
     @PostMapping
+    @Operation(
+            summary = "Запрос на сохранене нового продукта",
+            responses = {
+                    @ApiResponse(
+                            description = "Успешный ответ", responseCode = "200",
+                            content = @Content(schema = @Schema(implementation = ProductDto.class))
+                    )
+            }
+    )
     public ProductDto saveNewProduct(@RequestBody ProductDto productDto) {
         productValidator.validate(productDto);
         Product product = productConverter.dtoToEntity(productDto);
@@ -90,6 +91,15 @@ public class ProductsController {
     }
 
     @PutMapping
+    @Operation(
+            summary = "Запрос на обновление текущего продукта",
+            responses = {
+                    @ApiResponse(
+                            description = "Успешный ответ", responseCode = "200",
+                            content = @Content(schema = @Schema(implementation = ProductDto.class))
+                    )
+            }
+    )
     public ProductDto updateProduct(@RequestBody ProductDto productDto) {
         productValidator.validate(productDto);
         Product product = productsService.update(productDto);
@@ -97,6 +107,18 @@ public class ProductsController {
     }
 
     @DeleteMapping("/{id}")
+    @Operation(
+            summary = "Запрос на удаление продукта по id",
+            responses = {
+                    @ApiResponse(
+                            description = "Успешный ответ", responseCode = "200"
+                    ),
+                    @ApiResponse(
+                            description = "Ошибка", responseCode = "400",
+                            content = @Content(schema = @Schema(implementation = CartServiceAppError.class))
+                    )
+            }
+    )
     public void deleteById(@PathVariable Long id) {
         productsService.deleteById(id);
     }

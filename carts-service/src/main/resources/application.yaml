@@ -8,3 +8,7 @@ utils:
 integrations:
   core-service:
     url: http://localhost:5555/core
+    timeouts:
+      connect: 10000
+      read: 2000
+      write: 2000
