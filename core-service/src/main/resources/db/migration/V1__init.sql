@@ -49,13 +49,23 @@ values
 
 create table orders
 (
-    id          bigserial primary key,
-    username    varchar(255) not null,
-    total_price numeric(8, 2)  not null,
-    address     varchar(255),
-    phone       varchar(255),
-    created_at  timestamp default current_timestamp,
-    updated_at  timestamp default current_timestamp
+    id           bigserial primary key,
+    username     varchar(255) not null,
+    name         varchar(255),
+    surname      varchar(255),
+    total_price  numeric(8, 2)  not null,
+    order_status varchar(255)  not null,
+    address      varchar(255),
+    street       varchar(255),
+    phone        varchar(255),
+    house        varchar(255),
+    flat         varchar(255),
+    city         varchar(255),
+    postal_code  varchar(255),
+    country_code varchar(255),
+    district     varchar(255),
+    created_at   timestamp default current_timestamp,
+    updated_at   timestamp default current_timestamp
 );
 
 create table order_items
@@ -70,8 +80,8 @@ create table order_items
     updated_at        timestamp default current_timestamp
 );
 
-insert into orders (username, total_price, address, phone)
-values ('john', 199.98, 'address', '12345');
+insert into orders (username, total_price, address, phone, name, surname, order_status, city, street, house, flat, postal_code, country_code, district)
+values ('john', 199.98, 'address', '12345', 'john', 'malcovich', '1', 'moscow', 'nahimovskiy', '61', '70', '193232', 'RUS', 'Moscow');
 
 insert into order_items (product_id, order_id, quantity, price_per_product, price)
 values (1, 1, 2, 99.99, 199.98);

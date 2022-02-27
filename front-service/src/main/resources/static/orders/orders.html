@@ -16,5 +16,19 @@
             <td>{{order.totalPrice}}</td>
         </tr>
         </tbody>
+        <tr>
+            <td>Title</td>
+            <td>Cost</td>
+            <td>Quantity</td>
+            <td>Price</td>
+        </tr>
+        <tbody>
+        <tr ng-repeat="item in order.items">
+            <td>{{item.productTitle}}</td>
+            <td>{{item.pricePerProduct}}</td>
+            <td>{{item.quantity}}</td>
+            <td>{{item.totalPrice}}</td>
+        </tr>
+        </tbody>
     </table>
 </div>

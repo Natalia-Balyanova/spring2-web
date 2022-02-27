@@ -32,6 +32,7 @@
         </tr>
         </tbody>
     </table>
+    </table>
     <p>
         <button class="btn btn-secondary" ng-show="isUserLoggedIn() && cart.items.length > 0" ng-click="clearCart()">Clear cart</button>
     </p>
@@ -43,9 +44,25 @@
         <p></p>
         <input class="form-control" type="text" placeholder="Address" ng-model="orderDetails.address">
         <p></p>
+        <input class="form-control" type="text" placeholder="Name" ng-model="orderDetails.name">
+        <p></p>
+        <input class="form-control" type="text" placeholder="Surname" ng-model="orderDetails.surname">
+        <p></p>
+        <input class="form-control" type="text" placeholder="country" ng-model="orderDetails.countryCode">
+        <p></p>
+        <input class="form-control" type="text" placeholder="postal code" ng-model="orderDetails.postalCode">
+        <p></p>
+        <input class="form-control" type="text" placeholder="district" ng-model="orderDetails.district">
+        <p></p>
+        <input class="form-control" type="text" placeholder="city" ng-model="orderDetails.city">
+        <p></p>
+        <input class="form-control" type="text" placeholder="street" ng-model="orderDetails.street">
+        <p></p>
+        <input class="form-control" type="text" placeholder="house" ng-model="orderDetails.house">
+        <p></p>
+        <input class="form-control" type="text" placeholder="flat" ng-model="orderDetails.flat">
     </form>
 
     <button class="btn btn-primary" ng-click="checkOut()" ng-show="isUserLoggedIn() && cart.items.length > 0">Create order</button>
     <button class="btn btn-secondary" ng-click="disabledCheckOut()" ng-show="!isUserLoggedIn() && cart.items.length > 0">Create order</button>
-    </table>
 </div>

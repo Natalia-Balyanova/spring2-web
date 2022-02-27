@@ -1,5 +1,6 @@
 package com.geekbrains.spring.web.core.controllers;
 
+import com.geekbrains.spring.web.api.exceptions.ResourceNotFoundException;
 import com.geekbrains.spring.web.core.converters.OrderConverter;
 import com.geekbrains.spring.web.api.core.OrderDetailsDto;
 import com.geekbrains.spring.web.api.core.OrderDto;
@@ -49,6 +50,21 @@ public class OrdersController {
     public List<OrderDto> getCurrentUserOrders(@RequestHeader String username) {
         return orderService.findOrdersByUsername(username).stream()
                 .map(orderConverter::entityToDto).collect(Collectors.toList());
+    }
+
+
+    @GetMapping("/{id}")
+    @Operation(
+            summary = "Запрос на получение заказа по id",
+            responses = {
+                    @ApiResponse(
+                            description = "Успешный ответ", responseCode = "200",
+                            content = @Content(schema = @Schema(implementation = List.class))
+                    )
+            }
+    )
+    public OrderDto getOrderById(@PathVariable Long id) {
+        return orderConverter.entityToDto(orderService.findById(id).orElseThrow(() -> new ResourceNotFoundException("ORDER 404")));
     }
 }
 
