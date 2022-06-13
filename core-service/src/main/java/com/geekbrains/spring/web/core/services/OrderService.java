@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -45,5 +46,11 @@ public class OrderService {
 
     public List<Order> findOrdersByUsername(String username) {
         return ordersRepository.findAllByUsername(username);
+    }
+
+    public List<Order> findAllOrdersBetweenDate(String startDateString, String finishDateString) {
+        LocalDateTime startDate = LocalDateTime.parse(startDateString);
+        LocalDateTime finishDate = LocalDateTime.parse(finishDateString);
+        return ordersRepository.findAllOrdersBetweenDate(startDate,finishDate);
     }
 }

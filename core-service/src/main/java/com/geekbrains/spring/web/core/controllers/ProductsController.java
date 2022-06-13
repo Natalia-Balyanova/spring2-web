@@ -10,6 +10,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @RestController
 @RequestMapping("/api/v1/products")
 @RequiredArgsConstructor
@@ -61,5 +64,12 @@ public class ProductsController {
     @DeleteMapping("/{id}")
     public void deleteById(@PathVariable Long id) {
         productsService.deleteById(id);
+    }
+
+    @GetMapping("/all")
+    public List<ProductDto> getAllProducts(){
+        return productsService.findAll().stream()
+                .map(productConverter::entityToDto)
+                .collect(Collectors.toList());
     }
 }

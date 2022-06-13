@@ -9,6 +9,8 @@ import com.geekbrains.spring.web.cart.services.CartService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+
 @RestController
 @RequestMapping("/api/v1/cart")
 @RequiredArgsConstructor
@@ -59,5 +61,11 @@ public class CartsController {
             return cartService.getCartUuidFromSuffix(username);
         }
         return cartService.getCartUuidFromSuffix(uuid);
+    }
+
+    @GetMapping("/count/{productId}")
+    public Integer getProductsCounter(@PathVariable long productId){
+        String productKey = (LocalDate.now()) + "_" + productId;
+        return cartService.getProductsCounter(productKey);
     }
 }

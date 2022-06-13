@@ -29,5 +29,12 @@ public class OrdersController {
         return orderService.findOrdersByUsername(username).stream()
                 .map(orderConverter::entityToDto).collect(Collectors.toList());
     }
+
+    @GetMapping("/between_date")
+    public List<OrderDto> getAllOrders(@RequestHeader String startDate,
+                                                   @RequestHeader String finishDate) {
+        return orderService.findAllOrdersBetweenDate(startDate,finishDate).stream()
+                .map(orderConverter::entityToDto).collect(Collectors.toList());
+    }
 }
 

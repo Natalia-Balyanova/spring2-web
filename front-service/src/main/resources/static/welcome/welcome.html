@@ -2,3 +2,49 @@
     <p></p>
     <h1>SPRING WEB MARKET</h1>
 </div>
+
+<h3>Most bought products in last month</h3>
+<p></p>
+<table class="table table-hover">
+    <tr>
+        <td>ID</td>
+        <td>Title</td>
+        <td>Price</td>
+        <td>Category</td>
+        <td>Add to cart</td>
+    </tr>
+    <tbody>
+    <tr ng-repeat="product in mostBoughtProducts">
+        <td>{{product.id}}</td>
+        <td>{{product.title}}</td>
+        <td>{{product.price}}</td>
+        <td>{{product.categoryTitle}}</td>
+        <td>
+            <button class="btn btn-primary" ng-click="addToCart(product.id)">Add to Card</button>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<h3>Most added products in cart per day</h3>
+<p></p>
+<table class="table table-hover">
+    <tr>
+        <td>ID</td>
+        <td>Title</td>
+        <td>Price</td>
+        <td>Category</td>
+        <td>Add to cart</td>
+    </tr>
+    <tbody>
+    <tr ng-repeat="product in mostAddedProductsToCart">
+        <td>{{product.id}}</td>
+        <td>{{product.title}}</td>
+        <td>{{product.price}}</td>
+        <td>{{product.categoryTitle}}</td>
+        <td>
+            <button class="btn btn-primary" ng-click="addToCart(product.id)">Add to Card</button>
+        </td>
+    </tr>
+    </tbody>
+</table>
